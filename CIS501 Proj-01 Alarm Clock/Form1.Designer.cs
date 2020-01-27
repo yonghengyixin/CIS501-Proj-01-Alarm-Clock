@@ -28,13 +28,100 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.EditButton = new System.Windows.Forms.Button();
+            this.AddButton = new System.Windows.Forms.Button();
+            this.TextBox1 = new System.Windows.Forms.TextBox();
+            this.SnoozeButton = new System.Windows.Forms.Button();
+            this.StopButton = new System.Windows.Forms.Button();
+            this.listBox = new System.Windows.Forms.ListBox();
+            this.SuspendLayout();
+            // 
+            // EditButton
+            // 
+            this.EditButton.Enabled = false;
+            this.EditButton.Location = new System.Drawing.Point(21, 30);
+            this.EditButton.Name = "EditButton";
+            this.EditButton.Size = new System.Drawing.Size(75, 35);
+            this.EditButton.TabIndex = 0;
+            this.EditButton.Text = "Edit";
+            this.EditButton.UseVisualStyleBackColor = true;
+            this.EditButton.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // AddButton
+            // 
+            this.AddButton.Location = new System.Drawing.Point(147, 30);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(75, 35);
+            this.AddButton.TabIndex = 1;
+            this.AddButton.Text = "+";
+            this.AddButton.UseVisualStyleBackColor = true;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            // 
+            // TextBox1
+            // 
+            this.TextBox1.Location = new System.Drawing.Point(21, 90);
+            this.TextBox1.Multiline = true;
+            this.TextBox1.Name = "TextBox1";
+            this.TextBox1.ReadOnly = true;
+            this.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.TextBox1.Size = new System.Drawing.Size(201, 200);
+            this.TextBox1.TabIndex = 2;
+            // 
+            // SnoozeButton
+            // 
+            this.SnoozeButton.Enabled = false;
+            this.SnoozeButton.Location = new System.Drawing.Point(21, 341);
+            this.SnoozeButton.Name = "SnoozeButton";
+            this.SnoozeButton.Size = new System.Drawing.Size(75, 35);
+            this.SnoozeButton.TabIndex = 3;
+            this.SnoozeButton.Text = "Snooze";
+            this.SnoozeButton.UseVisualStyleBackColor = true;
+            // 
+            // StopButton
+            // 
+            this.StopButton.Enabled = false;
+            this.StopButton.Location = new System.Drawing.Point(147, 341);
+            this.StopButton.Name = "StopButton";
+            this.StopButton.Size = new System.Drawing.Size(75, 35);
+            this.StopButton.TabIndex = 4;
+            this.StopButton.Text = "Stop";
+            this.StopButton.UseVisualStyleBackColor = true;
+            // 
+            // listBox
+            // 
+            this.listBox.FormattingEnabled = true;
+            this.listBox.Location = new System.Drawing.Point(299, 92);
+            this.listBox.Name = "listBox";
+            this.listBox.ScrollAlwaysVisible = true;
+            this.listBox.Size = new System.Drawing.Size(204, 199);
+            this.listBox.TabIndex = 5;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(618, 403);
+            this.Controls.Add(this.listBox);
+            this.Controls.Add(this.StopButton);
+            this.Controls.Add(this.SnoozeButton);
+            this.Controls.Add(this.TextBox1);
+            this.Controls.Add(this.AddButton);
+            this.Controls.Add(this.EditButton);
+            this.Name = "Form1";
+            this.Text = "Alarm501";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button EditButton;
+        private System.Windows.Forms.Button AddButton;
+        private System.Windows.Forms.TextBox TextBox1;
+        private System.Windows.Forms.Button SnoozeButton;
+        private System.Windows.Forms.Button StopButton;
+        private System.Windows.Forms.ListBox listBox;
     }
 }
 
