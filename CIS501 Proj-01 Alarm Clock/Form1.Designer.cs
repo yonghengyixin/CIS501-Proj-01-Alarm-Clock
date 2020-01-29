@@ -65,6 +65,7 @@
             this.SnoozeButton.TabIndex = 3;
             this.SnoozeButton.Text = "Snooze";
             this.SnoozeButton.UseVisualStyleBackColor = true;
+            this.SnoozeButton.Click += new System.EventHandler(this.SnoozeButton_Click);
             // 
             // StopButton
             // 
@@ -75,6 +76,7 @@
             this.StopButton.TabIndex = 4;
             this.StopButton.Text = "Stop";
             this.StopButton.UseVisualStyleBackColor = true;
+            this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
             // listBox
             // 
@@ -98,6 +100,7 @@
             this.Controls.Add(this.EditButton);
             this.Name = "Form1";
             this.Text = "Alarm501";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }

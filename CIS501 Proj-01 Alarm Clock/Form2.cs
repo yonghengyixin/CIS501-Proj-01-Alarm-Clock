@@ -22,27 +22,59 @@ namespace CIS501_Proj_01_Alarm_Clock
             InitializeComponent();
         }
 
+        /// <summary>
+        /// handle editButton part
+        /// </summary>
+        /// <param name="time"></param>
         public Form2(string time)
         {
             InitializeComponent();
             if (time != null)
             {
+                StringBuilder sb = new StringBuilder();
                 string[] pieces = time.Split(' ', ':');
-                //TimePicker.Value = 
+                sb.Append(pieces[0] + ":");
+                sb.Append(pieces[1] + ":");
+                sb.Append(pieces[2] + " ");
+                sb.Append(pieces[3]);
+                if(pieces[0].Length > 1)
+                {
+                    TimePicker.Value = DateTime.ParseExact(sb.ToString(), "hh:mm:ss tt", System.Globalization.CultureInfo.CurrentCulture);
+                }
+                else
+                {
+                    TimePicker.Value = DateTime.ParseExact(sb.ToString(), "h:mm:ss tt", System.Globalization.CultureInfo.CurrentCulture);
+                }
+                
             }
         }
 
+        /// <summary>
+        /// Cancel all, and don't return anything
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// return the time as DateTime to listBox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetButton_Click(object sender, EventArgs e)
         {
             Time = TimePicker.Text + " " + On.ToString();
             this.Close();
         }
 
+        /// <summary>
+        /// checkBox has been check or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (On == true)
