@@ -30,7 +30,6 @@
         {
             this.EditButton = new System.Windows.Forms.Button();
             this.AddButton = new System.Windows.Forms.Button();
-            this.TextBox1 = new System.Windows.Forms.TextBox();
             this.SnoozeButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
             this.listBox = new System.Windows.Forms.ListBox();
@@ -45,7 +44,7 @@
             this.EditButton.TabIndex = 0;
             this.EditButton.Text = "Edit";
             this.EditButton.UseVisualStyleBackColor = true;
-            this.EditButton.Click += new System.EventHandler(this.button1_Click);
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
             // 
             // AddButton
             // 
@@ -56,16 +55,6 @@
             this.AddButton.Text = "+";
             this.AddButton.UseVisualStyleBackColor = true;
             this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
-            // 
-            // TextBox1
-            // 
-            this.TextBox1.Location = new System.Drawing.Point(21, 90);
-            this.TextBox1.Multiline = true;
-            this.TextBox1.Name = "TextBox1";
-            this.TextBox1.ReadOnly = true;
-            this.TextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.TextBox1.Size = new System.Drawing.Size(201, 200);
-            this.TextBox1.TabIndex = 2;
             // 
             // SnoozeButton
             // 
@@ -90,27 +79,26 @@
             // listBox
             // 
             this.listBox.FormattingEnabled = true;
-            this.listBox.Location = new System.Drawing.Point(299, 92);
+            this.listBox.Location = new System.Drawing.Point(21, 81);
             this.listBox.Name = "listBox";
             this.listBox.ScrollAlwaysVisible = true;
-            this.listBox.Size = new System.Drawing.Size(204, 199);
+            this.listBox.Size = new System.Drawing.Size(201, 199);
             this.listBox.TabIndex = 5;
+            this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(618, 403);
+            this.ClientSize = new System.Drawing.Size(242, 403);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.StopButton);
             this.Controls.Add(this.SnoozeButton);
-            this.Controls.Add(this.TextBox1);
             this.Controls.Add(this.AddButton);
             this.Controls.Add(this.EditButton);
             this.Name = "Form1";
             this.Text = "Alarm501";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -118,7 +106,6 @@
 
         private System.Windows.Forms.Button EditButton;
         private System.Windows.Forms.Button AddButton;
-        private System.Windows.Forms.TextBox TextBox1;
         private System.Windows.Forms.Button SnoozeButton;
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.ListBox listBox;

@@ -15,9 +15,21 @@ namespace CIS501_Proj_01_Alarm_Clock
         public String Time;
         private bool On = false;
 
+        Form1 f1 = new Form1();
+
         public Form2()
         {
             InitializeComponent();
+        }
+
+        public Form2(string time)
+        {
+            InitializeComponent();
+            if (time != null)
+            {
+                string[] pieces = time.Split(' ', ':');
+                //TimePicker.Value = 
+            }
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
