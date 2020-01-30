@@ -15,8 +15,6 @@ namespace CIS501_Proj_01_Alarm_Clock
         public String Time;
         private bool On = false;
 
-        Form1 f1 = new Form1();
-
         public Form2()
         {
             InitializeComponent();
@@ -45,7 +43,15 @@ namespace CIS501_Proj_01_Alarm_Clock
                 {
                     TimePicker.Value = DateTime.ParseExact(sb.ToString(), "h:mm:ss tt", System.Globalization.CultureInfo.CurrentCulture);
                 }
+
                 
+                if (string.Equals(pieces, "On"))
+                {
+                    On = true;                }
+                else
+                {
+                    On = false;
+                }
             }
         }
 
@@ -66,7 +72,15 @@ namespace CIS501_Proj_01_Alarm_Clock
         /// <param name="e"></param>
         private void SetButton_Click(object sender, EventArgs e)
         {
-            Time = TimePicker.Text + " " + On.ToString();
+            if (On)
+            {
+                Time = TimePicker.Text + " On";
+            }
+            else
+            {
+                Time = TimePicker.Text + " OFF";
+            }
+
             this.Close();
         }
 

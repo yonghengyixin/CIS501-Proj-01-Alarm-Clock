@@ -33,6 +33,7 @@
             this.SnoozeButton = new System.Windows.Forms.Button();
             this.StopButton = new System.Windows.Forms.Button();
             this.listBox = new System.Windows.Forms.ListBox();
+            this.Label = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // EditButton
@@ -88,11 +89,21 @@
             this.listBox.TabIndex = 5;
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
             // 
+            // Label
+            // 
+            this.Label.AutoSize = true;
+            this.Label.Location = new System.Drawing.Point(60, 307);
+            this.Label.Name = "Label";
+            this.Label.Size = new System.Drawing.Size(20, 13);
+            this.Label.TabIndex = 6;
+            this.Label.Text = "file";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(242, 403);
+            this.Controls.Add(this.Label);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.StopButton);
             this.Controls.Add(this.SnoozeButton);
@@ -102,6 +113,7 @@
             this.Text = "Alarm501";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -112,6 +124,7 @@
         private System.Windows.Forms.Button SnoozeButton;
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.ListBox listBox;
+        private System.Windows.Forms.Label Label;
     }
 }
 
