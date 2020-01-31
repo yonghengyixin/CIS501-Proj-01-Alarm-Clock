@@ -45,12 +45,15 @@ namespace CIS501_Proj_01_Alarm_Clock
                 }
 
                 
-                if (string.Equals(pieces, "On"))
+                if (string.Equals(pieces[4], "On"))
                 {
-                    On = true;                }
+                    On = true;
+                    OnButton.Checked = true;
+                }
                 else
                 {
                     On = false;
+                    OnButton.Checked = false;
                 }
             }
         }
@@ -91,15 +94,13 @@ namespace CIS501_Proj_01_Alarm_Clock
         /// <param name="e"></param>
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (On == true)
+            if (OnButton.Checked == true)
             {
-                OnButton.Checked = false;
-                On = false;
-            }
-            else if (On == false)
-            {
-                OnButton.Checked = true;
                 On = true;
+            }
+            else
+            {
+                On = false;
             }
         }
     }

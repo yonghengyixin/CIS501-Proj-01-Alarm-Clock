@@ -17,22 +17,27 @@ namespace CIS501_Proj_01_Alarm_Clock
         private int count = 0;
         private int timeNum = 0;
         private string fileName = "Time.txt";
-        private string[] timeData = new string[10];
+        public string[] timeData = new string[10];
         System.Timers.Timer timer1 = new System.Timers.Timer(1000);
-        System.Timers.Timer timer5 = new System.Timers.Timer(5000);
 
         public Form1()
         {
             InitializeComponent();
-            StreamReader File = new StreamReader(fileName);
+
+            if (!File.Exists(fileName))
+            {
+                using (StreamWriter sw = new StreamWriter(fileName)) ;
+            }
+
+            StreamReader sr = new StreamReader(fileName);
             string line;
-            while((line = File.ReadLine()) != null)
+            while((line = sr.ReadLine()) != null)
             {
                 listBox.Items.Add(line);
                 timeData[timeNum] = line;
                 timeNum++;
             }
-            File.Close();
+            sr.Close();
         }
 
         /// <summary>
@@ -43,17 +48,25 @@ namespace CIS501_Proj_01_Alarm_Clock
         private void AddButton_Click(object sender, EventArgs e)
         {
 
-            StreamWriter File = new StreamWriter(fileName);
+            StreamWriter sw = new StreamWriter(fileName);
             Form2 f2 = new Form2();
             f2.ShowDialog();
             if(f2.Time != null)
             {
-                listBox.Items.Add(f2.Time);
-                File.WriteLine(f2.Time);
+                listBox.Items.Add(f2.Time);//add one to listbox
+
+                timeData[timeNum] = f2.Time;//add one to timeData array
                 timeNum++;
-                timeData[timeNum] = f2.Time;
+
+                sw.Flush();
+                timeNum = 0;
+                while (timeData[timeNum] != null)
+                {
+                    sw.WriteLine(timeData[timeNum]);//add one to file
+                    timeNum++;
+                }
             }
-            File.Close();
+            sw.Close();
         }
 
         /// <summary>
@@ -63,26 +76,29 @@ namespace CIS501_Proj_01_Alarm_Clock
         /// <param name="e"></param>
         private void EditButton_Click(object sender, EventArgs e)
         {
-            int line = listBox.SelectedIndex;
-            Time = listBox.SelectedItem.ToString();//should change to the time which from file
+            int line = listBox.SelectedIndex;//get the choosed line number
+            Time = listBox.SelectedItem.ToString();
             Form2 f2 = new Form2(Time);
             f2.ShowDialog();
             if (f2.Time != null)
             {
                 listBox.Items.RemoveAt(line);
-                listBox.Items.Insert(line, f2.Time);//also need change file's data
-                timeData[line] = f2.Time;
-                StreamWriter File = new StreamWriter(fileName);
-                File.Flush();
+                listBox.Items.Insert(line, f2.Time);//change the listbox
+
+                timeData[line] = f2.Time;//change the timeData array
+
+                StreamWriter sw = new StreamWriter(fileName);//change the file data
+                sw.Flush();
                 timeNum = 0;
                 while(timeData[timeNum] != null)
                 {
-                    File.WriteLine(timeData[timeNum]);
+                    sw.WriteLine(timeData[timeNum]);
                     timeNum++;
                 }
-                File.Close();
+                sw.Close();
+
             }
-            EditButton.Enabled = false;
+            this.Invoke(new Action(() => { EditButton.Enabled = false; }));
             Time = null;
         }
 
@@ -93,51 +109,8 @@ namespace CIS501_Proj_01_Alarm_Clock
         /// <param name="e"></param>
         private void listBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EditButton.Enabled = true;
-        }
-
-        /// <summary>
-        /// run it, if this app is open
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            bool alarmOn = false;
-
-            StreamReader File = new StreamReader(fileName);
-            string line;
-            while ((line = File.ReadLine()) != null)
-            {
-                string[] pieces = line.Split(' ');
-                if (string.Equals(pieces[2], "On"))
-                {
-                    alarmOn = true;
-                }
-            }
-            File.Close();
-
-            if ((string.Equals(Label.Text, "Stopped")) && alarmOn == true)
-            {
-                count++;
-                if(count > 5)
-                {
-                    Label.Text = "Running";
-                    count = 0;
-                }
-            }
-            else if((!string.Equals(Label.Text, "Stopped")) && alarmOn == true)
-            {
-                Label.Text = "Running";
-            }
-            else
-            {
-                Label.Text = "Stopped";
-            }
-
-            timer1.AutoReset = true;
-            timer1.Elapsed += TimeCompare;
-            timer1.Start();
+            
+            this.Invoke(new Action(() => { EditButton.Enabled = true; }));
         }
 
         /// <summary>
@@ -147,11 +120,9 @@ namespace CIS501_Proj_01_Alarm_Clock
         /// <param name="e"></param>
         private void SnoozeButton_Click(object sender, EventArgs e)
         {
-            SnoozeButton.Enabled = false;
-            StopButton.Enabled = false;
-            Label.Text = "Running";
-            timer5.Elapsed += OnTime;
-            timer5.Start();
+            this.Invoke(new Action(() => { SnoozeButton.Enabled = false; }));
+            this.Invoke(new Action(() => { StopButton.Enabled = false; }));
+            this.Invoke(new Action(() => { Label.Text = "Snooze 5 sec"; }));
         }
 
         /// <summary>
@@ -161,9 +132,21 @@ namespace CIS501_Proj_01_Alarm_Clock
         /// <param name="e"></param>
         private void StopButton_Click(object sender, EventArgs e)
         {
-            SnoozeButton.Enabled = false;
-            StopButton.Enabled = false;
-            Label.Text = "Stopped";
+            this.Invoke(new Action(() => { SnoozeButton.Enabled = false; }));
+            this.Invoke(new Action(() => { StopButton.Enabled = false; }));
+            this.Invoke(new Action(() => { Label.Text = "Stopped 5 sec"; }));//stop 
+        }
+
+        /// <summary>
+        /// run it, if this app is open
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            timer1.AutoReset = true;
+            timer1.Elapsed += TimeCompare;
+            timer1.Start();
         }
 
         /// <summary>
@@ -174,30 +157,86 @@ namespace CIS501_Proj_01_Alarm_Clock
         private void TimeCompare(object sender, System.Timers.ElapsedEventArgs e)
         {
             int i = 0;
-            while (timeData[i] != null)
+            bool alarmOn = false;
+
+            foreach(string a in timeData)
             {
-                string[] pieces = timeData[i].Split(' ');
-                StringBuilder sb = new StringBuilder();
-                sb.Append(pieces[0]);
-                sb.Append(pieces[1]);
-                if (string.Equals(pieces[2], "On"))
+                if (a != null)
                 {
-                    if (string.Equals(sb.ToString(), System.DateTime.Now.ToString()))
+                    string[] pieces = a.Split(' ');
+                    if (string.Equals(pieces[2], "On"))
                     {
-                        SnoozeButton.Enabled = true;
-                        StopButton.Enabled = true;
-                        Label.Text = "Alarm went off";
+                        alarmOn = true;
+                    }
+                }
+                
+            }
+
+            if ((string.Equals(Label.Text, "Snooze 5 sec")) && alarmOn == true)
+            {
+                count++;
+                if (count > 5)
+                {
+                    this.Invoke(new Action(() => { Label.Text = "Running"; }));
+                    count = 0;
+                    OnTime();
+                }
+            }
+            else if ((string.Equals(Label.Text, "Stopped 5 sec")) && alarmOn == true)//stop button and On alarm
+            {
+                count++;
+                if (count > 5)
+                {
+                    this.Invoke(new Action(() => { Label.Text = "Running"; }));
+                    count = 0;
+                }
+            }
+            else if ((!string.Equals(Label.Text, "Stopped")) && alarmOn == true && (!string.Equals(Label.Text, "Alarm went off")) &&
+                (!string.Equals(Label.Text, "Stopped 5 sec")) && (!string.Equals(Label.Text, "Snooze 5 sec")))//no stopped, no ontime and On alarm
+            {
+                this.Invoke(new Action(() => { Label.Text = "Running"; }));
+            }
+            else if (alarmOn == false)//all alarm off
+            {
+                this.Invoke(new Action(() => { Label.Text = "Stopped"; }));
+            }
+            else if (string.Equals(Label.Text, "Alarm went off")) ;//if On time
+            else
+            {
+                this.Invoke(new Action(() => { Label.Text = ""; }));
+            }
+
+            while (timeData[i] != null)//if compared into
+            {
+                string[] dataPieces = timeData[i].Split(' ');// 11:01:36 PM OFF
+                string[] realPieces = System.DateTime.Now.ToString().Split(' ');// 1/30/2020 11:01:36 PM
+
+                StringBuilder sbData = new StringBuilder();// 11:01:36 PM
+                sbData.Append(dataPieces[0]);
+                sbData.Append(dataPieces[1]);
+
+                StringBuilder sbReal = new StringBuilder();// 11:01:36 PM
+                sbReal.Append(realPieces[1]);
+                sbReal.Append(realPieces[2]);
+
+                if (string.Equals(dataPieces[2], "On"))
+                {
+                    if (string.Equals(sbData.ToString(), sbReal.ToString()))
+                    {
+                        this.Invoke(new Action(() => { SnoozeButton.Enabled = true; }));
+                        this.Invoke(new Action(() => { StopButton.Enabled = true; }));
+                        this.Invoke(new Action(() => { Label.Text = "Alarm went off"; }));
                     }
                 }
                 i++;
             }
         }
 
-        private void OnTime(object sender, System.Timers.ElapsedEventArgs e)
+        private void OnTime()
         {
-            SnoozeButton.Enabled = true;
-            StopButton.Enabled = true;
-            Label.Text = "Alarm went off";
+            this.Invoke(new Action(() => { SnoozeButton.Enabled = true; }));
+            this.Invoke(new Action(() => { StopButton.Enabled = true; }));
+            this.Invoke(new Action(() => { Label.Text = "Alarm went off"; }));
         }
     }
 }
